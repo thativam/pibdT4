@@ -17,4 +17,8 @@ public class EscolaService {
     public List<Escola> findAll() {
         return repository.findAll();
     }
+
+    public Escola save(Escola escola) {
+        return repository.save(escola);
+    }
 }
