@@ -1,53 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Nova Escola</title>
+    <meta charset="UTF-8">
+    <title>Cadastro de Escola</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="container mt-4">
-    <h2>Nova Escola</h2>
-    <form th:action="@{/escolas/salvar}" method="post" th:object="${pessoa}">
-        <div class="mb-3">
-            <label>Nome</label>
-            <input type="text" class="form-control" th:field="*{nome}" />
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Cadastro de Escola</h4>
         </div>
-        <div class="mb-3">
-            <label>Endereço</label>
-            <input type="text" class="form-control" th:field="*{endereco}" />
-        </div>
-        <div class="mb-3">
-            <label>Data de Nascimento</label>
-            <input type="date" class="form-control" th:field="*{dtNascimento}" />
-        </div>
-        <div class="mb-3">
-            <label>Documento</label>
-            <input type="text" class="form-control" th:field="*{documento}" />
-        </div>
-        <div class="mb-3">
-            <label>Telefone</label>
-            <input type="text" class="form-control" th:field="*{telefone}" />
-        </div>
+        <div class="card-body">
+            <form th:action="@{/escolas/salvar}" method="post" th:object="${escolaDto}">
 
-        <!-- Escola Info -->
-        <input type="hidden" name="escolaId" th:value="${escola.escolaId}" />
-        <div class="mb-3">
-            <label>Período</label>
-            <input type="text" class="form-control" name="periodo" th:value="${escola.periodo}" />
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="inclusao" th:checked="${escola.inclusao}" />
-            <label class="form-check-label">Inclusão</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="particular" th:checked="${escola.particular}" />
-            <label class="form-check-label">Particular</label>
-        </div>
+                <!-- Pessoa -->
+                <div class="mb-3">
+                    <label class="form-label">Nome</label>
+                    <input type="text" class="form-control" th:field="*{nome}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Endereço</label>
+                    <input type="text" class="form-control" th:field="*{endereco}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" th:field="*{dtNascimento}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Documento</label>
+                    <input type="text" class="form-control" th:field="*{documento}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefone</label>
+                    <input type="text" class="form-control" th:field="*{telefone}" />
+                </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
-    </form>
+                <!-- Escola -->
+                <hr />
+                <div class="mb-3">
+                    <label class="form-label">Período</label>
+                    <input type="text" class="form-control" th:field="*{periodo}" />
+                </div>
+
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" th:field="*{inclusao}" id="inclusaoCheck"/>
+                    <label class="form-check-label" for="inclusaoCheck">Inclusão</label>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" th:field="*{particular}" id="particularCheck"/>
+                    <label class="form-check-label" for="particularCheck">Particular</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

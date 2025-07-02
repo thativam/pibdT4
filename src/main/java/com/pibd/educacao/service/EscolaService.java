@@ -8,17 +8,24 @@ import org.springframework.stereotype.Service;
 import com.pibd.educacao.domain.Escola;
 import com.pibd.educacao.repository.EscolaRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
 @Service
 public class EscolaService {
     @Autowired
     private  EscolaRepository repository;
-
+    @PersistenceContext
+    private EntityManager em;
 
     public List<Escola> findAll() {
         return repository.findAll();
     }
 
+    @Transactional
     public Escola save(Escola escola) {
-        return repository.save(escola);
+        em.persist(escola);
+        return escola;
     }
 }
