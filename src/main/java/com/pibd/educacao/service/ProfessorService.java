@@ -1,12 +1,10 @@
 package com.pibd.educacao.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pibd.educacao.domain.Professor;
-import com.pibd.educacao.repository.EscolaRepository;
 import com.pibd.educacao.repository.ProfessorRepository;
 
 import jakarta.persistence.EntityManager;
