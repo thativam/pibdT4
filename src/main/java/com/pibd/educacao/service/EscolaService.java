@@ -1,6 +1,7 @@
 package com.pibd.educacao.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,9 @@ public class EscolaService {
     public Escola save(Escola escola) {
         em.persist(escola);
         return escola;
+    }
+
+    public Optional<Escola> getById(Long id){
+        return repository.findById(id);
     }
 }

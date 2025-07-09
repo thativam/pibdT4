@@ -12,8 +12,104 @@
 
 <!-- Main content -->
 <div class="container mt-5">
-    <h1>Oie</h1>
-    <p>Pagina inicial</p>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Nova Turma</h5>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/turmas/salvar}" method="post" th:object="${turmaDto}">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Escola</label>
+                        <select class="form-select" th:field="*{escolaId}" required>
+                            <option th:each="e : ${escolas}" 
+                                    th:value="${e.escolaId}" 
+                                    th:text="${e.pessoa.nome}">Escolha uma escola</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Professor</label>
+                        <select class="form-select" th:field="*{professorId}" required>
+                            <option value="">-- Sem professor --</option>
+                            <option th:each="p : ${professores}" 
+                                    th:value="${p.profId}" 
+                                    th:text="${p.pessoa.nome}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Sala</label>
+                        <input type="number" class="form-control" th:field="*{sala}" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Ano</label>
+                        <input type="number" class="form-control" th:field="*{ano}" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Vagas</label>
+                        <input type="number" class="form-control" th:field="*{vagas}" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Criar Turma</button>
+            </form>
+        </div>
+    </div>
+    <h4 class="mb-4">Turmas Cadastradas</h4>
+
+    <div th:each="turma : ${turmas}" class="card mb-4 shadow-sm">
+        <div class="card-header">
+            <strong>Turma:</strong> <span th:text="'(' + ${turma.ano} + ' - Sala ' + ${turma.sala} + ')'"></span> |
+            <strong>Escola:</strong> <span th:text="${turma.escola.pessoa.nome}"></span> |
+            <strong>Professor:</strong>
+            <span th:text="${turma.professor != null ? turma.professor.pessoa.nome : '---'}"></span>
+        </div>
+
+        <div class="card-body">
+            <form th:action="@{/turmas/adicionar-aluno}" method="post">
+                <input type="hidden" name="turmaId" th:value="${turma.turmaId}" />
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-8">
+                        <label class="form-label">Adicionar Aluno</label>
+                        <select class="form-select" name="alunoId" required>
+                            <option value="">-- Escolha um aluno --</option>
+                            <option th:each="a : ${alunosDisponiveis}"
+                                    th:value="${a.alunoId}"
+                                    th:text="${a.pessoa.nome + ' - ' + a.pessoa.documento}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-outline-primary w-100">Adicionar Aluno</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Lista de alunos já adicionados -->
+            <div class="mt-4">
+                <h6>Alunos da Turma</h6>
+                <table class="table table-sm table-bordered mt-2">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Documento</th>
+                            <th>Media</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="aluno : ${alunoPorTurma[turma.turmaId]}">
+                            <td th:text="${aluno.pessoa.nome}">João</td>
+                            <td th:text="${aluno.pessoa.documento}">123456</td>
+                            <td td th:text="${aluno.media}">
+                                Alguma coisa
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(alunoPorTurma[turma.turmaId])}">
+                            <td colspan="3" class="text-muted text-center">Nenhum aluno nesta turma.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
